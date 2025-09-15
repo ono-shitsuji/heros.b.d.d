@@ -6,4 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <?php
+        header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
+        include("notFound.php");
+    ?>
