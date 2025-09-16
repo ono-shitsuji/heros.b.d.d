@@ -3,7 +3,13 @@
 body img {width: 100%;}
 
 h1 {color: white;
-font-size: xx-large;
-text-transform: uppercase;
-text-align: center;
-background-image: url("/public/img/kurumi.webp")}
+    font-size: xx-large;
+    text-transform: uppercase;
+    text-align: center;
+    background-image: url("/public/img/kurumi.webp")}
+
+form {
+    background-color: black;
+    color: azure;
+    text-align: center;
+    font-size: xx-large;}
