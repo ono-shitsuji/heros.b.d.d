@@ -30,4 +30,9 @@ services:
       - db_data:/var/lib/mysql
 
 volumes:
+<<<<<<< HEAD
   db_data:
+=======
+  db_data:
+  
+>>>>>>> refs/remotes/origin/main
