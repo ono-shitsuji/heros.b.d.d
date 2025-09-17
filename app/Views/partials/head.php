@@ -11,7 +11,7 @@
         <img src="public/img/sunset.jpg" alt="sunset mountains">
             <form action="welcome.php" method="POST">
                     E-mail: <input type="text" name="email"><br>
-                    password: <input type="text" name="last-name"><br>
+                    password: <input type="password" name="last-name"><br>
     <input type="submit">
 </form>
 
