@@ -13,3 +13,13 @@ form {
     color: azure;
     text-align: center;
     font-size: xx-large;}
+
+div .navy   {
+    background-color: black;
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.navy li a , i { 
+    text-decoration: none;
+}

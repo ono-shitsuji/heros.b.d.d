@@ -10,8 +10,7 @@
         isNotEmpty('email');
         isNotEmpty('password');
 
-        var_dump($mail);
-        var_dump($password);
+
 
         if(empty($arrayerror)){
             $query = "SELECT * FROM `user` WHERE email = :email";
