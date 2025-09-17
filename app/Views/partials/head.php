@@ -10,11 +10,8 @@
     <h1>竜が我が敵を喰らう</h1> 
         <img src="public/img/sunset.jpg" alt="sunset mountains">
             <form action="welcome.php" method="POST">
-                first-Name: <input type="text" name="first-name"><br>
                     E-mail: <input type="text" name="email"><br>
-                        power: <input type="text" name="power"><br>
-                    last-name: <input type="text" name="last-name"><br>
-                age: <input type="text" name="age"><br>
+                    password: <input type="text" name="last-name"><br>
     <input type="submit">
 </form>
 

@@ -1,0 +1,10 @@
+h3 { 
+    color: red;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: xx-large;
+}
+
+body {
+    background-image: url("/public/img/maid-greetings.jpg");
+}
