@@ -1,70 +1,66 @@
-<?php
-require_once(__DIR__ . '/../Utils/checkForm.php');
+<?php 
+require_once (__DIR__ . '/../Utils/checkForm.php');
 
-if(isset($_POST['pseudo'])){
+//Si la personne est connecté + admin alors:
+if( (isset($_SESSION['user'])) && ($_SESSION['user']['role'] === "admin")){
 
-    $valueEmail = htmlspecialchars($_POST['email']);
-    $valuePassword = htmlspecialchars($_POST['password']);
-    $valuePseudo = htmlspecialchars($_POST['pseudo']);
+    if(isset($_GET['id'])){
+        $id = htmlspecialchars($_GET['id']);
 
-    checkFormat('pseudo', $valuePseudo);
-    checkFormat('password', $valuePassword);
-    checkFormat('email', $valueEmail);
+        //Je fais une requête sql pour récupérer le heros par l'id
+        $query = "SELECT `id`, `name`, `magic_power`, `image`, `description` 
+        FROM `heros` WHERE `id` = :id";
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(':id', $id);
+        $statement->execute();
+        //on met la reponse dans la variable hero
+        $hero = $statement->fetch();
 
-    isNotEmpty('pseudo');
-    isNotEmpty('email');
-    isNotEmpty('password');
-    
-    //nos erreurs sont dans :
-    //var_dump($arrayError);
-    
-    //Si mon tableau d'erreur est vide alor :
-    if(empty($arrayError)){
+        //Si il y a un hero alors:
+        if($hero){
 
-        //Verifie si l'utilisateur ( si l'adresse mail ) existe:
-        //On prepare la requete:
-        $queryMail = "SELECT * FROM `user` WHERE email = :email";
-        // Je prepare ma requete sql a l'envoie
-        $mailStatement = $pdo->prepare($queryMail);
-        // Je modifie la valeur du mail reçu
-        $mailStatement->bindParam(':email', $valueEmail);
-        //On execute la requete avec le param' mail
-        $mailStatement->execute();
-        //dans la variable userMail je met la reponse de ma requete
-        $userMail = $mailStatement->fetch();
-        //var_dump($userMail);
-        
-        // si mon userMail existe dans la base de donner alors
-        if($userMail){
-            //On appel la fonction errorMessage
-            errorMessage("Cette adresse email existe déjà !");
+            if(isset($_POST['name'])){
+                $valueName = htmlspecialchars($_POST['name']);
+                $valuePower = htmlspecialchars($_POST['power']);
+                $valueDescription = htmlspecialchars($_POST['description']);
+                $valueImg = htmlspecialchars($_POST['image']);
+
+                checkFormat('name', $valueName);
+                checkFormat('power', $valuePower);
+                checkFormat('description', $valueDescription);
+                checkFormat('image', $valueImg);
+
+                isNotEmpty('name');
+                isNotEmpty('power');
+                isNotEmpty('description');
+
+                if(empty($arrayError)){
+                    $queryUpdate = "UPDATE `heros` 
+                    SET `name` = :name, `magic_power` = :magic_power, `description`= :description, `image` = :image
+                    WHERE `id` = :id";
+
+                    $statementUpdate = $pdo->prepare($queryUpdate);
+                    $statementUpdate->bindValue(':name', $valueName);
+                    $statementUpdate->bindValue(':magic_power', $valuePower);
+                    $statementUpdate->bindValue(':description', $valueDescription);
+                    $statementUpdate->bindValue(':image', $valueImg);
+                    $statementUpdate->bindValue(':id', $id);
+                    $statementUpdate->execute();
+
+                    redirectToRoute('/', 200);
+                }
+            }
+
+            require_once(__DIR__ . '/../Views/edithero.view.php');
         }else{
-            //Sinon
-            //Hash le mot de passe :
-            $passwordHash = password_hash($valuePassword, PASSWORD_DEFAULT);
-
-            // 0- Je creer la requête SQL:
-            $query = "INSERT INTO `user` (`pseudo`, `password`, `email`) 
-            VALUES (:pseudo, :password, :email)";
-
-            // 1- prépare la requête :
-            $queryStatement = $pdo->prepare($query);
-
-            // 2- lier les marqueurs aux valeurs :
-            $queryStatement->bindValue(':pseudo', $valuePseudo);
-            $queryStatement->bindValue(':password', $passwordHash);
-            $queryStatement->bindValue(':email', $valueEmail);
-
-            // 3- exécuter la requête :
-            $queryStatement->execute();
-
-            redirectToRoute('/');
+            redirectToRoute('404', 404);
         }
 
+    }else{
+        redirectToRoute('404', 404);
     }
 
-    require_once( __DIR__ . "/../Views/register.view.php" );
 }else{
-
-    require_once( __DIR__ . "/../Views/register.view.php" );
+    redirectToRoute('404', 404);
 }
+    
