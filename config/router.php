@@ -6,9 +6,15 @@
 // Ce tableau associe des chemins d'URI à des fichiers de contrôleurs spécifiques
 // Le chemin dans l'URL (comme '/') est relié au contrôleur correspondant (comme 'HomeController.php')
 $routes = [
+    //La page d'accueil
     '/' => 'HomeController.php',
+    //Connexion déconnexion inscription
     '/register' => 'RegisterController.php',
     '/login' => 'LoginController.php',
+    '/logout' => 'LogoutController.php',
+    //Les Heros
+    '/addheros' => 'AddHerosController.php',
+    '/hero' =>'HeroController.php'
 ];
 
 // Récupération de l'URI actuelle de la requête utilisateur
@@ -33,13 +39,3 @@ if(array_key_exists($uri, $routes)){
     require_once(__DIR__ . '/../app/Controllers/404Controller.php');
 
 }
-
-
-
-
-//instructions
-//retrieve data of forms then if else error echo error etc after 
-//if else  sql request to retrieve the user data select from user "mail"
-// all of them you mus retrieve with *
-//compare the passwords === database password with hash 
-//if ok echo success else error
